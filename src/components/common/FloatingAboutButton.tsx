@@ -13,9 +13,7 @@ const wiggle = keyframes`
 const Wrapper = styled(Link)`
     position: fixed;
     right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-
+    bottom: 16px;
     z-index: 999;
 
     display: inline-flex;
@@ -48,10 +46,6 @@ const Wrapper = styled(Link)`
     &:hover {
         transform: translateY(-50%) scale(1.05);
         background: rgba(255, 255, 255, 0.16);
-    }
-
-    &:active {
-        transform: translateY(-50%) scale(0.94);
     }
 `;
 
