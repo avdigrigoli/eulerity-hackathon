@@ -2,7 +2,7 @@
 
 - Based on the structure for "Pets" and the existing code for SelectionContext.tsx, ensure that the pets that are selected would be included across the whole session. Additionally, make a select all function in here to select all of the pets.
 
-- Create generic styling for a fix toolbar based on the structure and funcationality of my Toolbar component
+- Create generic styling for a fix toolbar based on the structure and functionality of my Toolbar component
 
 - Create generic styling for PetCard.tsx based on my code to use as a starting point
 
