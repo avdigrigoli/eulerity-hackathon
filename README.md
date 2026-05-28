@@ -8,7 +8,8 @@ This project demonstrates full frontend engineering capabilities including data 
 ## 🚀 Live Demo
 
 👉 ** Deployment:**  
-[will fill when deployed]
+
+https://eulerity-hackathon-1im9dt81o-avdigrigolis-projects.vercel.app/
 
 ---
 
