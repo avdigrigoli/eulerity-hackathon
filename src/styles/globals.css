@@ -3,7 +3,7 @@
        COLOR SYSTEM
     ------------------------- */
     /*--bg: #0f172a;*/
-    --bg: url("public/background-image.png") center / cover no-repeat fixed;
+    --bg: url("src/assets/background-image.png") center / cover no-repeat fixed;
     --surface: #111827;
     --card: #ddd;
 
