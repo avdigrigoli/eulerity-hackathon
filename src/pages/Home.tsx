@@ -127,8 +127,6 @@ export default function Home() {
 
     return (
         <PageContainer>
-            <h1>Pet Gallery</h1>
-
             <Toolbar
                 search={search}
                 sort={sort}
@@ -143,6 +141,8 @@ export default function Home() {
                 progress={downloadProgress}
                 estimatedSizeMB={estimatedSizeMB}
             />
+
+            <h1>Pet Gallery</h1>
 
             <PetGrid>
                 {visiblePets.map((pet) => (
