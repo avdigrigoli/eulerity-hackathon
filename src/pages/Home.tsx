@@ -1,3 +1,8 @@
+import PageContainer from "../components/layout/PageContainer.tsx";
+
 export default function Home() {
-    return <div>Home</div>;
+    return (
+        <PageContainer>
+        </PageContainer>
+    );
 }
