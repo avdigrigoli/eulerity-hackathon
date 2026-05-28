@@ -20,9 +20,19 @@
  * UI components clean and focused on rendering.
  */
 
-import {useEffect, useState} from "react";
-import {fetchPets} from "../api/pets";
-import type {Pet, PetApiResponse} from "../types/pet";
+import { useEffect, useState } from "react";
+import { fetchPets } from "../api/pets";
+import type { Pet, PetApiResponse } from "../types/pet";
+
+function slugify(text: string) {
+    return text
+        .toLowerCase()
+        .replace(/&/g, "and")
+        .replace(/[^a-z0-9\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-");
+}
 
 export function usePets() {
     const [pets, setPets] = useState<Pet[]>([]);
@@ -39,14 +49,14 @@ export function usePets() {
 
                 const data: PetApiResponse[] = await fetchPets();
 
-                const normalized: Pet[] = data.map((pet, index) => ({
-                    id: btoa(pet.url + index),
+                const normalized: Pet[] = data.map((pet) => ({
+                    id: slugify(pet.title),
                     title: pet.title,
                     description: pet.description,
                     url: pet.url,
                     createdAt: new Date(pet.created),
 
-                    estimatedSize: Math.floor(Math.random() * 2000 + 500), //fake size of photo/pet will make real later
+                    estimatedSize: Math.floor(Math.random() * 2000 + 500),
                 }));
 
                 if (mounted) {

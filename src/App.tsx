@@ -1,9 +1,11 @@
 import "./styles/globals.css";
 
+import { BrowserRouter } from "react-router-dom";
 import { SelectionProvider } from "./context/SelectionContext";
 import AppRoutes from "./routes/AppRoutes";
 import { useEffect } from "react";
 import { lenis } from "./utils/smoothScroll.ts";
+import FloatingAboutButton from "./components/common/FloatingAboutButton.tsx";
 
 export default function App() {
     useEffect(() => {
@@ -16,8 +18,11 @@ export default function App() {
     }, []);
 
     return (
-        <SelectionProvider>
-            <AppRoutes />
-        </SelectionProvider>
+        <BrowserRouter>
+            <SelectionProvider>
+                <AppRoutes />
+                <FloatingAboutButton />
+            </SelectionProvider>
+        </BrowserRouter>
     );
 }
