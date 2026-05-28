@@ -1,25 +1,3 @@
-/**
- * usePets
- *
- * @description
- * Custom React hook for fetching and managing pet data state.
- *
- * @input
- * - No direct arguments.
- * - Internally calls fetchPets() to retrieve API data.
- *
- * @output
- * Returns an object containing:
- * - pets: Normalized array of Pet objects
- * - loading: Boolean fetch state
- * - error: Error message if request fails
- * - empty: Boolean indicating no pets were returned
- *
- * @rationale
- * Centralizes pet-fetching logic into a reusable hook to keep
- * UI components clean and focused on rendering.
- */
-
 import { useEffect, useState } from "react";
 import { fetchPets } from "../api/pets";
 import type { Pet, PetApiResponse } from "../types/pet";
@@ -32,6 +10,16 @@ function slugify(text: string) {
         .trim()
         .replace(/\s+/g, "-")
         .replace(/-+/g, "-");
+}
+
+async function getImageSizeMB(url: string): Promise<number> {
+    try {
+        const res = await fetch(url);
+        const blob = await res.blob();
+        return Number((blob.size / (1024 * 1024)).toFixed(2));
+    } catch {
+        return 0;
+    }
 }
 
 export function usePets() {
@@ -49,31 +37,34 @@ export function usePets() {
 
                 const data: PetApiResponse[] = await fetchPets();
 
-                const normalized: Pet[] = data.map((pet) => ({
-                    id: slugify(pet.title),
-                    title: pet.title,
-                    description: pet.description,
-                    url: pet.url,
-                    createdAt: new Date(pet.created),
+                const normalized: Pet[] = await Promise.all(
+                    data.map(async (pet) => {
+                        const fileSizeMB = pet.url
+                            ? await getImageSizeMB(pet.url)
+                            : 0;
 
-                    estimatedSize: Math.floor(Math.random() * 2000 + 500),
-                }));
+                        return {
+                            id: slugify(pet.title),
+                            title: pet.title,
+                            description: pet.description,
+                            url: pet.url,
+                            createdAt: new Date(pet.created),
 
-                if (mounted) {
-                    setPets(normalized);
-                }
+                            // REAL VALUE
+                            fileSizeMB,
+                        };
+                    })
+                );
+
+                if (mounted) setPets(normalized);
             } catch (err) {
                 if (mounted) {
                     setError(
-                        err instanceof Error
-                            ? err.message
-                            : "Unknown error"
+                        err instanceof Error ? err.message : "Unknown error"
                     );
                 }
             } finally {
-                if (mounted) {
-                    setLoading(false);
-                }
+                if (mounted) setLoading(false);
             }
         }
 
